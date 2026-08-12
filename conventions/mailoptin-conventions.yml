@@ -1,0 +1,121 @@
+generated: '2026-08-12'
+method: probed
+source: >-
+  live probes of https://mailoptin.io/wp-json/ and its routes on 2026-08-12; plugin source
+  at https://downloads.wordpress.org/plugin/mailoptin.1.2.78.1.zip
+note: >-
+  MailOptin publishes no API design guide. Everything below is the observed behaviour of
+  the WordPress REST API that mailoptin.io serves, plus the request conventions the plugin
+  itself emits on its outbound webhook. Read this as "what a client actually meets", not
+  as a policy MailOptin has committed to.
+surfaces:
+- name: WordPress REST API (mailoptin.io)
+  base: https://mailoptin.io/wp-json
+  namespaces: 35
+  routes: 771
+  public_index: https://mailoptin.io/wp-json/
+- name: MCP server
+  base: https://mailoptin.io/wp-json/mcp/mcp-oauth-server
+  gated: true
+authentication:
+  styles:
+  - OAuth 2.1 authorization code + PKCE S256, Bearer in Authorization header (MCP only)
+  - WordPress Application Passwords over HTTP Basic
+  - Cookie + X-WP-Nonce header (same-origin browser)
+  anonymous_read: true
+  see: authentication/mailoptin-authentication.yml
+idempotency:
+  supported: false
+  header: null
+  note: >-
+    No idempotency key is accepted on any surface. The WordPress REST API has no
+    idempotency mechanism, and the plugin's outbound webhook sends no key either — a
+    retried optin submission produces a duplicate request downstream. No Idempotency
+    pointer is emitted, deliberately.
+pagination:
+  style: page-number
+  params:
+    page: 1-based page number
+    per_page: page size, integer 1..100 inclusive (400 rest_invalid_param outside that range)
+    offset: supported on most collection routes
+    order: asc|desc
+    orderby: date|id|title|slug and route-specific values
+  response_fields: none — collections are bare JSON arrays
+  response_headers:
+    X-WP-Total: total matching records
+    X-WP-TotalPages: total pages at the current per_page
+    Link: RFC 8288 rel="next" / rel="prev"
+  cors_exposed: X-WP-Total, X-WP-TotalPages, Link
+  observed_example:
+    url: https://mailoptin.io/wp-json/wp/v2/posts?per_page=2
+    x_wp_total: 260
+    x_wp_totalpages: 130
+field_selection:
+  sparse_fields:
+    supported: true
+    param: _fields
+    note: comma-separated allowlist of response properties
+  expansion:
+    supported: true
+    param: _embed
+    note: embeds linked resources under _embedded, driven by the _links block
+  envelope:
+    supported: true
+    param: _envelope
+    note: wraps body/status/headers into one JSON object for clients that cannot read headers
+hypermedia:
+  supported: true
+  note: >-
+    Every resource carries a _links object (self, collection, about, author, replies,
+    wp:attachment, curies). Route discovery is genuinely machine-readable — the index at
+    /wp-json/ lists each route with its methods and argument schema, including types,
+    defaults and required flags.
+metadata:
+  supported: true
+  note: per-resource `meta` object where registered by a plugin
+request_id:
+  supported: false
+  note: >-
+    No request-id or trace header is returned. The only correlatable identifier on a
+    response is Cloudflare's cf-ray, which is edge-scoped and not documented by MailOptin.
+versioning:
+  style: path namespace
+  examples: [wp/v2, wp-abilities/v1, mcp]
+  see: lifecycle/mailoptin-lifecycle.yml
+errors:
+  format: WordPress REST error object, not RFC 9457
+  see: errors/mailoptin-problem-types.yml
+rate_limiting:
+  documented: false
+  signal_headers: none
+  see: rate-limits/mailoptin-rate-limits.yml
+content_negotiation:
+  request: application/json (write routes), query string for reads
+  response: application/json; charset=UTF-8
+  method_override: X-HTTP-Method-Override supported by WordPress for clients limited to POST
+outbound_webhook_conventions:
+  applies_to: the plugin running on a customer's own WordPress site
+  methods: [GET, POST, PUT, PATCH, DELETE]
+  formats:
+  - application/json
+  - application/x-www-form-urlencoded
+  body: >-
+    Entirely user-composed key/value pairs. Merge tags mo_email, mo_name, mo_fname,
+    mo_lname resolve to the subscriber's fields; any other value resolves from the optin's
+    extra fields.
+  get_and_delete: body pairs are urlencoded onto the query string instead of a body
+  headers: user-defined; Content-Type is set to application/json automatically for JSON POST/PUT/PATCH
+  signing: none — no HMAC, no shared secret, no timestamp
+  retries: none — a single wp_remote_request per submission, no retry or backoff
+  tls_verification: on by default, overridable via the https_local_ssl_verify filter
+  source: >-
+    mailoptin/src/connections/WebHookConnect/SendWebhookRequest.php in the 1.2.78.1
+    distribution, and https://mailoptin.io/article/trigger-webhooks-wordpress-form-submissions/
+agent_notes:
+- >-
+  Cloudflare bot management returns 403 HTML to non-browser user agents on mailoptin.com
+  and on several mailoptin.io paths (/support/, /submit-ticket/, my.mailoptin.io/login/),
+  while the same paths serve normally to a browser. The /wp-json/ surface is not affected.
+- >-
+  robots.txt carries Cloudflare content signals: search=yes, ai-train=no, use=reference,
+  with Amazonbot, Applebot-Extended and Bytespider disallowed outright.

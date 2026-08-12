@@ -1,0 +1,76 @@
+generated: '2026-08-12'
+method: probed
+source: live probes of https://mailoptin.io/.well-known/* and https://my.mailoptin.io/.well-known/*
+note: >-
+  mailoptin.com 403s every request that is not a browser and redirects to mailoptin.io,
+  so the canonical host for every probe is mailoptin.io. Two real machine-readable
+  documents are served: RFC 8414 OAuth 2.0 Authorization Server Metadata and RFC 9728
+  OAuth 2.0 Protected Resource Metadata. Both exist because the WordPress site runs an
+  MCP adapter (namespace `mcp` in the site's REST API) that is protected by an OAuth 2.1
+  authorization code + PKCE flow. Everything else 404s. No security.txt is served, so no
+  SecurityTxt pointer is emitted.
+hosts:
+- host: mailoptin.io
+  paths:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: application/json; charset=UTF-8
+    document: true
+    file: mailoptin-oauth-authorization-server.json
+    note: >-
+      RFC 8414. issuer https://mailoptin.io; authorization_code + refresh_token grants;
+      PKCE S256 required; scopes_supported ["mcp"]; token_endpoint_auth_methods_supported
+      ["none"] (public clients); client_id_metadata_document_supported true.
+      Served on the trailing-slash URL after a 301.
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    content_type: application/json; charset=UTF-8
+    document: true
+    file: mailoptin-oauth-protected-resource.json
+    note: >-
+      RFC 9728. Names the protected resource as
+      https://mailoptin.io/wp-json/mcp/mcp-oauth-server — this is how the MCP server was
+      discovered. bearer_methods_supported ["header"], scopes_supported ["mcp"].
+  - path: /.well-known/security.txt
+    status: 404
+    document: false
+  - path: /.well-known/openid-configuration
+    status: 404
+    document: false
+  - path: /.well-known/api-catalog
+    status: 404
+    document: false
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    document: false
+  - path: /.well-known/agent-card.json
+    status: 404
+    document: false
+  - path: /.well-known/agent.json
+    status: 404
+    document: false
+- host: my.mailoptin.io
+  note: customer account host (Cloudflare); root answers 200 to a browser UA, all probes 404
+  paths:
+  - path: /.well-known/security.txt
+    status: 404
+    document: false
+- host: mailoptin.com
+  note: >-
+    Marketing alias. Every path returned 403 to non-browser clients (Cloudflare bot rule)
+    and redirects to mailoptin.io. Not probed further.
+  paths:
+  - path: /.well-known/security.txt
+    status: 403
+    document: false
+hosts_that_do_not_resolve:
+- api.mailoptin.io
+- app.mailoptin.io
+- connect.mailoptin.io
+- docs.mailoptin.io
+- status.mailoptin.io
+summary:
+  paths_probed: 24
+  documents_found: 2
+  security_txt: false
+  agent_card: false

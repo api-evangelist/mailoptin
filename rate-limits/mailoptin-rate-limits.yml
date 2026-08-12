@@ -1,0 +1,41 @@
+generated: '2026-08-12'
+method: probed
+source: >-
+  https://mailoptin.io/docs/ (searched, nothing published),
+  live response headers observed on https://mailoptin.io/wp-json/wp/v2/posts
+limit_count: 0
+note: >-
+  MailOptin publishes no rate limits anywhere in its documentation, and none are
+  discoverable at runtime. The public WordPress REST API on mailoptin.io returns no
+  RateLimit-*, X-RateLimit-* or Retry-After headers on a 200; the only enforced ceiling
+  observed is WordPress's own per_page bound. There is no hosted product API to limit.
+limits: []
+response_headers:
+  ratelimit_standard: null
+  x_ratelimit: null
+  retry_after: null
+  observed:
+  - header: x-wp-total
+    value_example: '260'
+    note: result-count header, not a rate-limit signal
+  - header: x-wp-totalpages
+    value_example: '130'
+  - header: link
+    value_example: '<...?per_page=2&page=2>; rel="next"'
+    note: RFC 8288 pagination
+exhaustion_status_code: null
+observed_ceilings:
+- surface: https://mailoptin.io/wp-json/wp/v2/posts
+  parameter: per_page
+  max: 100
+  on_exceed:
+    http_status: 400
+    code: rest_invalid_param
+    message: per_page must be between 1 (inclusive) and 100 (inclusive)
+edge:
+  provider: Cloudflare
+  note: >-
+    mailoptin.com and several mailoptin.io paths (/support/, /submit-ticket/,
+    my.mailoptin.io/login/) return 403 to non-browser user agents. That is bot management,
+    not a documented rate limit, but it is the practical ceiling an automated client hits
+    first.

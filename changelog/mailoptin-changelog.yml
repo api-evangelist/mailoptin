@@ -1,0 +1,109 @@
+generated: '2026-08-12'
+method: searched
+source: https://mailoptin.io/changelog/
+secondary_source: https://api.wordpress.org/plugins/info/1.0/mailoptin.json
+scheme: >-
+  Four-part dotted versions. The premium build tracks a 2.x line and the free WordPress.org
+  build a 1.x line, released on the same dates with the same notes — 2.2.78.1 (premium) and
+  1.2.78.1 (lite) are the same release. Not semver: breaking changes are not signalled by
+  the version.
+current_version: 2.2.78.1
+current_version_lite: 1.2.78.1
+current_version_date: '2026-07-28'
+cadence: >-
+  Roughly monthly, sometimes several patches in a month. Nine releases in the twelve months
+  to 2026-07-28.
+breaking_change_policy: none published
+entries:
+- version: 2.2.78.1
+  version_lite: 1.2.78.1
+  date: '2026-07-28'
+  breaking: false
+  additions: []
+  fixes:
+  - Fixed XSS in optin block.
+  - Fixed Mailchimp lead subscription bug due to an invalid IP address.
+- version: 2.2.78.0
+  version_lite: 1.2.78.0
+  date: '2026-07-01'
+  breaking: false
+  additions:
+  - Added Copper CRM integration.
+  fixes:
+  - Fixed security issue where a non-whitelisted option could be used as a list-subscription field value.
+- version: 2.2.77.3
+  version_lite: 1.2.77.3
+  date: '2026-06-19'
+  breaking: false
+  additions: []
+  fixes:
+  - Improved PHP 8.5 support.
+  - Fixed security issue where an optin without the list-selection field behaved as one.
+- version: 2.2.77.2
+  version_lite: 1.2.77.2
+  date: '2026-05-22'
+  breaking: false
+  additions:
+  - Added reCAPTCHA Enterprise support.
+  fixes:
+  - Fixed more Outlook email template rendering issues.
+- version: 2.2.77.1
+  version_lite: 1.2.77.1
+  date: '2026-05-19'
+  breaking: false
+  additions:
+  - Added column support for posts in email template.
+  fixes:
+  - Updated Klaviyo API to version 2026-04-15.
+  - Improved email template support for Outlook.
+  - Fixed subscription bug in Brevo on duplicate contact.
+  note: >-
+    Third-party API version pin visible in the notes — MailOptin tracks Klaviyo's dated
+    API versioning on its consumer side.
+- version: 2.2.77.0
+  version_lite: 1.2.77.0
+  date: '2026-03-25'
+  breaking: false
+  additions:
+  - Added SendPulse email marketing integration.
+  - Added Bento email marketing integration.
+  fixes:
+  - Increased API request timeout.
+  - Improved hiding of content in Outlook email.
+  - Improved admin UI for WP 7.
+- version: 2.2.76.0
+  version_lite: 1.2.76.0
+  date: '2026-01-23'
+  breaking: false
+  additions:
+  - Added Mailercloud email marketing integration.
+  - Added Cloudflare Turnstile integration.
+  - Added background processing of external optin.
+  fixes:
+  - Fixed fatal error with cloning optin.
+  - Fixed bug where Sender integration did not fetch all lists.
+- version: 2.2.75.4
+  version_lite: 1.2.75.4
+  date: '2025-11-07'
+  breaking: false
+  additions: []
+  fixes:
+  - Upgraded HubSpot integration fully to the v3 API.
+  - Guarded against multiple error emails.
+  - PHP performance improvements.
+- version: 2.2.75.3
+  version_lite: 1.2.75.3
+  date: '2025-10-24'
+  breaking: false
+  additions: []
+  fixes:
+  - Addressed email campaign error duplication issue.
+- version: 2.2.75.2
+  version_lite: 1.2.75.2
+  date: '2025-09-07'
+  breaking: false
+  additions: []
+  fixes:
+  - Fixed bug allowing users to receive email campaigns multiple times.
+  - Enhanced campaign background processing.
+window: recent 10 entries as published on 2026-08-12

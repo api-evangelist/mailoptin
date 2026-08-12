@@ -1,0 +1,71 @@
+generated: '2026-08-12'
+method: searched
+source: https://mailoptin.io/pricing/
+currency: USD
+billing_model: per-site license, billed annually (plus one lifetime option)
+plan_count: 5
+note: >-
+  Pricing is for the MailOptin WordPress plugin licence, not for API calls — there is no
+  hosted API and therefore no request-metered tier, no overage and no quota. The units
+  that vary across tiers are the number of WordPress sites a licence activates on and
+  which plugin features unlock.
+plans:
+- name: Lite
+  price: 0
+  currency: USD
+  period: perpetual
+  sites: 1
+  distribution: https://wordpress.org/plugins/mailoptin/
+  quota: null
+  overage: null
+  limits:
+    note: >-
+      Free build from the WordPress.org plugin repository with restricted functionality.
+      Paid subscribers are downgraded to this tier when a subscription lapses; existing
+      data is retained.
+- name: Standard
+  price: 99
+  currency: USD
+  period: year
+  sites: 1
+  quota: null
+  overage: null
+  limits:
+    sites: 1
+- name: Pro
+  price: 289
+  currency: USD
+  period: year
+  sites: 3
+  quota: null
+  overage: null
+  limits:
+    sites: 3
+- name: Agency
+  price: 499
+  currency: USD
+  period: year
+  sites: unlimited
+  quota: null
+  overage: null
+  limits:
+    sites: unlimited
+- name: Lifetime Pro
+  price: 999
+  currency: USD
+  period: one-time
+  sites: 3
+  quota: null
+  overage: null
+  limits:
+    sites: 3
+  note: One-time payment, no recurring fees and no annual renewal.
+terms:
+  refund_window_days: 14
+  refund_note: >-
+    Full refund within 14 days if the product does not meet the buyer's needs, provided
+    MailOptin support has first attempted to resolve any technical issue. No refunds
+    after 14 days.
+  on_expiry: Account downgrades to the Lite tier; data is retained.
+  free_trial: false
+enterprise_contact_only: false

@@ -1,0 +1,73 @@
+generated: '2026-08-12'
+method: probed
+source: >-
+  https://mailoptin.io/.well-known/oauth-authorization-server,
+  https://mailoptin.io/.well-known/oauth-protected-resource,
+  https://mailoptin.io/wp-json/ (authentication block)
+docs: https://mailoptin.io/docs/
+note: >-
+  There is no OpenAPI to derive from — derive-authentication.py found no spec. This
+  profile is built entirely from documents mailoptin.io actually serves and from live
+  401 responses observed on 2026-08-12.
+schemes:
+- id: oauth2_mcp
+  type: oauth2
+  applies_to: https://mailoptin.io/wp-json/mcp/mcp-oauth-server
+  flow: authorization_code
+  pkce: required
+  pkce_methods: [S256]
+  issuer: https://mailoptin.io
+  authorization_url: https://mailoptin.io/oauth/authorize
+  token_url: https://mailoptin.io/oauth/token
+  revocation_url: https://mailoptin.io/oauth/revoke
+  refresh: true
+  scopes: [mcp]
+  token_endpoint_auth_methods: [none]
+  client_registration: client_id_metadata_document
+  bearer_methods: [header]
+  evidence:
+    url: https://mailoptin.io/.well-known/oauth-authorization-server
+    http_status: 200
+- id: application_passwords
+  type: http
+  scheme: basic
+  applies_to: https://mailoptin.io/wp-json/
+  description: >-
+    WordPress Application Passwords. The site's REST API root advertises the
+    authorization endpoint in its `authentication` block. Per-user credentials issued
+    from wp-admin; used with HTTP Basic.
+  authorization_url: https://mailoptin.io/wp-admin/authorize-application.php
+  evidence:
+    url: https://mailoptin.io/wp-json/
+    http_status: 200
+- id: cookie_nonce
+  type: apiKey
+  in: header
+  name: X-WP-Nonce
+  applies_to: https://mailoptin.io/wp-json/
+  description: >-
+    WordPress cookie + nonce authentication for same-origin browser requests. Advertised
+    in the CORS `access-control-allow-headers` response header alongside Authorization.
+  evidence:
+    url: https://mailoptin.io/wp-json/wp/v2/posts
+    http_status: 200
+anonymous_access:
+  available: true
+  note: >-
+    Read-only content routes under /wp-json/wp/v2/ answer anonymously (posts returned
+    x-wp-total 260 on 2026-08-12). Write routes, the Abilities API and both MCP servers
+    are gated.
+observed_denials:
+- url: https://mailoptin.io/wp-json/mcp/mcp-oauth-server
+  http_status: 401
+  code: mcp_unauthorized
+- url: https://mailoptin.io/wp-json/wp-abilities/v1/abilities
+  http_status: 401
+  code: rest_forbidden
+product_authentication:
+  note: >-
+    The MailOptin PRODUCT is a self-hosted WordPress plugin. It authenticates OUTBOUND to
+    60+ third-party email/CRM providers using each provider's own credentials (API keys,
+    OAuth). Those are the third parties' schemes, not MailOptin's, and are not recorded
+    here. MailOptin itself issues a license key, entered in wp-admin, for updates and
+    premium features.

@@ -1,0 +1,78 @@
+# MailOptin
+
+> MailOptin is a WordPress lead-generation and email-automation plugin: popups, optin
+> forms, one-off newsletters and event-triggered follow-up emails, wired to 60+ email
+> marketing platforms, CRMs and WordPress plugins. It is self-hosted software, not a
+> hosted service — there is no MailOptin product API, no API key to obtain, and no
+> developer portal.
+
+generated: 2026-08-12
+method: generated
+source: apis.yml and the artifacts in this repository (no /llms.txt is served — https://mailoptin.io/llms.txt returned 404 on 2026-08-12)
+
+## What is and is not callable
+
+- **No product API.** MailOptin publishes no OpenAPI, no hosted REST API, no GraphQL
+  endpoint and no client SDK. Its functionality runs inside the customer's own WordPress
+  installation.
+- **What the plugin registers on a customer site.** The only REST routes MailOptin
+  registers are inside the WS Form integration, under WS Form's own namespace on the
+  site where the plugin is installed. There is no `mailoptin/v1` namespace.
+- **What mailoptin.io itself serves.** The company website runs WordPress and exposes a
+  public, self-describing REST API plus a live, auth-gated MCP server. Those are site
+  and content surfaces, not the product.
+
+## Callable surfaces on mailoptin.io
+
+- [WordPress REST API root](https://mailoptin.io/wp-json/): public route index, 35
+  namespaces, 771 routes, each with its argument schema. Anonymous read on
+  `/wp-json/wp/v2/*`.
+- [MCP server](https://mailoptin.io/wp-json/mcp/mcp-oauth-server): live, returns 401
+  `mcp_unauthorized` anonymously with a `WWW-Authenticate: Bearer` challenge pointing at
+  the protected-resource metadata. Tool list is gated.
+- [OAuth authorization server metadata](https://mailoptin.io/.well-known/oauth-authorization-server):
+  RFC 8414. Authorization code + refresh token, PKCE S256 required, public clients,
+  single scope `mcp`.
+- [OAuth protected resource metadata](https://mailoptin.io/.well-known/oauth-protected-resource):
+  RFC 9728. Names the MCP endpoint as the protected resource.
+
+## Event surface
+
+- [Webhooks on optin submission](https://mailoptin.io/article/trigger-webhooks-wordpress-form-submissions/):
+  one trigger, outbound from the customer's own site to a URL the site owner supplies.
+  GET/POST/PUT/PATCH/DELETE, JSON or form-encoded, user-composed body. No signing, no
+  secret, no retries.
+
+## Documentation
+
+- [Documentation home](https://mailoptin.io/docs/)
+- [Getting started](https://mailoptin.io/section/getting-started/)
+- [Integrations catalog](https://mailoptin.io/integrations/) — 60+ connectors
+- [Extending MailOptin with code](https://mailoptin.io/article/modify-extend-codes/) —
+  hooks and filters, via the [snippet library](https://github.com/mailoptin/library)
+- [Changelog](https://mailoptin.io/changelog/)
+- [Pricing](https://mailoptin.io/pricing/) — Lite free, Standard $99/yr, Pro $289/yr,
+  Agency $499/yr, Lifetime Pro $999 one-time
+- [GDPR guidance](https://mailoptin.io/gdpr-compliance/)
+- [Terms](https://mailoptin.io/terms-conditions/) ·
+  [Privacy](https://mailoptin.io/privacy-policy/)
+
+## Distribution
+
+- [WordPress.org plugin](https://wordpress.org/plugins/mailoptin/) — free build, 1.2.78.1
+  released 2026-07-28, 2.4M downloads
+- [GitHub organization](https://github.com/mailoptin) — 34 public repos
+- Packagist `mailoptin/*` — the plugin's own PHP libraries, not client SDKs
+
+## Notes for automated clients
+
+- `mailoptin.com` is a marketing alias that 403s every non-browser request and redirects
+  to `mailoptin.io`. Use `mailoptin.io`.
+- `/support/`, `/submit-ticket/` and `my.mailoptin.io/login/` return 403 HTML to
+  non-browser user agents (Cloudflare bot management) while serving normally to a browser.
+  `/wp-json/` is unaffected.
+- `robots.txt` carries content signals `search=yes, ai-train=no, use=reference`, and
+  disallows Amazonbot, Applebot-Extended and Bytespider outright.
+- There is no status page. `mailoptin.statuspage.io` resolves to Atlassian's own marketing
+  site and is not a MailOptin status page.
+- No rate limits are published and no rate-limit headers are returned.

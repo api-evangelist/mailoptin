@@ -1,0 +1,135 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  https://api.wordpress.org/plugins/info/1.0/mailoptin.json,
+  https://repo.packagist.org/p2/mailoptin/*.json,
+  https://api.github.com/orgs/mailoptin/repos
+note: >-
+  IMPORTANT — none of these are client SDKs. MailOptin publishes no hosted product API,
+  so there is nothing for an SDK to wrap. What it publishes is (a) the plugin itself,
+  distributed through the WordPress.org plugin repository, and (b) the plugin's own
+  internal PHP libraries, published to Packagist under the `mailoptin/` vendor namespace
+  for its build. They are recorded here as real, first-party, dated distributions — and
+  deliberately NOT wired as `type: SDKs`, because doing so would credit MailOptin with a
+  developer SDK surface it does not have.
+package_count: 7
+official_count: 7
+sdk_count: 0
+packages:
+- name: mailoptin
+  registry: wordpress.org
+  official: true
+  kind: plugin
+  language: PHP
+  url: https://wordpress.org/plugins/mailoptin/
+  registry_metadata: https://api.wordpress.org/plugins/info/1.0/mailoptin.json
+  version: 1.2.78.1
+  published: '2026-07-28'
+  downloads: 2434900
+  rating: 96
+  num_ratings: 435
+  requires_wordpress: '6.4'
+  tested_wordpress: 7.0.4
+  requires_php: '7.4'
+  first_published: '2017-07-17'
+  note: >-
+    The free "lite" build. Versions on the 1.x line; the premium build tracks the same
+    dates on a 2.x line (see changelog/mailoptin-changelog.yml). Actively maintained —
+    latest release is the same week as this pass.
+- name: mailoptin/core
+  registry: packagist
+  official: true
+  kind: library
+  language: PHP
+  url: https://packagist.org/packages/mailoptin/core
+  repository: https://github.com/mailoptin/core
+  registry_metadata: https://repo.packagist.org/p2/mailoptin/core.json
+  version: 0.1.0-alpha.1785158752
+  published: '2026-07-27'
+  release_count: 372
+  downloads: 2918
+  note: >-
+    The plugin's core engine, republished on every build; the version is a timestamped
+    alpha, not a semver release, so a consumer cannot read compatibility from it. Current.
+- name: mailoptin/advanceanalytics
+  registry: packagist
+  official: true
+  kind: library
+  language: PHP
+  url: https://packagist.org/packages/mailoptin/advanceanalytics
+  repository: https://github.com/mailoptin/advanceanalytics
+  registry_metadata: https://repo.packagist.org/p2/mailoptin/advanceanalytics.json
+  version: 0.2.1785158729
+  published: '2026-06-19'
+  release_count: 249
+  downloads: 902
+- name: mailoptin/mailchimp-api-php
+  registry: packagist
+  official: true
+  kind: library
+  language: PHP
+  url: https://packagist.org/packages/mailoptin/mailchimp-api-php
+  repository: https://github.com/mailoptin/mailchimp-api-php
+  registry_metadata: https://repo.packagist.org/p2/mailoptin/mailchimp-api-php.json
+  version: 2.1.7
+  published: '2026-07-27'
+  release_count: 20
+  downloads: 1072
+  license: GPL-2.0-or-later
+  note: >-
+    A maintained fork of a third-party PHP client for the MAILCHIMP v3 API — a library
+    MailOptin consumes, not one it offers to its own users. The only package here that
+    carries a real semver version.
+- name: mailoptin/authifly
+  registry: packagist
+  official: true
+  kind: library
+  language: PHP
+  url: https://packagist.org/packages/mailoptin/authifly
+  repository: https://github.com/mailoptin/authifly
+  registry_metadata: https://repo.packagist.org/p2/mailoptin/authifly.json
+  version: 0.1.0-alpha.1587979879
+  published: '2020-04-24'
+  release_count: 125
+  downloads: 1190
+  license: MIT
+  note: >-
+    PHP OAuth authentication library used for the third-party provider connections. Last
+    published 2020 — six years stale relative to the plugin, which shipped this month.
+    Still vendored into current builds.
+- name: mailoptin/libsodium
+  registry: packagist
+  official: true
+  kind: library
+  language: PHP
+  url: https://packagist.org/packages/mailoptin/libsodium
+  repository: https://github.com/mailoptin/libsodium
+  registry_metadata: https://repo.packagist.org/p2/mailoptin/libsodium.json
+  version: 0.1.0-alpha.1587979917
+  published: '2020-04-21'
+  release_count: 131
+  downloads: 1064
+  note: Cryptography shim. Last published 2020.
+- name: mailoptin/libprodium
+  registry: packagist
+  official: true
+  kind: library
+  language: PHP
+  url: https://packagist.org/packages/mailoptin/libprodium
+  repository: https://github.com/mailoptin/libprodium
+  registry_metadata: https://repo.packagist.org/p2/mailoptin/libprodium.json
+  version: 0.1.0-alpha.1539094582
+  published: '2018-09-15'
+  release_count: 41
+  downloads: 217
+  note: Last published 2018. Oldest first-party distribution in the namespace.
+registries_checked_with_no_result:
+- registry: npm
+  url: https://registry.npmjs.org/mailoptin
+  status: 404
+- registry: pypi
+  url: https://pypi.org/pypi/mailoptin/json
+  status: 404
+- registry: rubygems
+  url: https://rubygems.org/api/v1/gems/mailoptin.json
+  status: 404

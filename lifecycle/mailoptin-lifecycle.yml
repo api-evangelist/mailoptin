@@ -1,0 +1,55 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  https://mailoptin.io/changelog/, https://mailoptin.io/pricing/,
+  https://api.wordpress.org/plugins/info/1.0/mailoptin.json
+versioning:
+  scheme: four-part dotted (not semver)
+  current: 2.2.78.1
+  current_lite: 1.2.78.1
+  released: '2026-07-28'
+  api_versioning: >-
+    The only versioned API surface on mailoptin.io is the WordPress REST API, versioned by
+    namespace path segment (wp/v2, mcp, wp-abilities/v1). MailOptin publishes no product
+    API and therefore no API versioning policy of its own.
+  breaking_change_signal: none — changelog entries do not mark breaking changes
+deprecation:
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  note: >-
+    No deprecation or sunset policy is published anywhere on mailoptin.io. Feature and
+    integration removals, when they happen, appear only as changelog lines. No Deprecation
+    pointer is emitted for this reason.
+status_page:
+  published: false
+  probes:
+  - url: https://status.mailoptin.io/
+    status: 000
+    note: does not resolve
+  - url: https://mailoptin.statuspage.io/
+    status: 200
+    note: >-
+      FALSE POSITIVE — 200 is Atlassian's own Statuspage marketing site after a redirect
+      (title "Real-Time Incident Communication with Statuspage"); the status.json API 302s
+      to statuspage.io. No MailOptin status page exists. No StatusPage pointer emitted.
+sla:
+  published: false
+support_lifecycle:
+  requires_wordpress: '6.4'
+  tested_wordpress: 7.0.4
+  requires_php: '7.4'
+  note: >-
+    Platform floor rather than an API lifecycle. The plugin drops support for older
+    WordPress/PHP by raising these minimums in a release, with no advance notice window.
+license_lifecycle:
+  on_expiry: >-
+    Paid licences downgrade to the free Lite tier at expiry. Data is retained; premium
+    features stop. Source: https://mailoptin.io/pricing/
+  refund_window_days: 14
+maintenance_signal:
+  first_release: '2017-07-17'
+  latest_release: '2026-07-28'
+  releases_last_12_months: 9
+  assessment: actively maintained

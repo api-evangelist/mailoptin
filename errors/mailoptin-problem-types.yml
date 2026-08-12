@@ -1,0 +1,65 @@
+generated: '2026-08-12'
+method: probed
+source: >-
+  live responses observed on https://mailoptin.io/wp-json/* on 2026-08-12; no OpenAPI
+  exists to derive from and MailOptin publishes no error reference
+format: wordpress-rest-error
+rfc9457: false
+note: >-
+  Not RFC 9457. The envelope is the WordPress REST API error object served as
+  application/json — {"code","message","data":{"status",...}} — with the HTTP status
+  duplicated inside data.status. Every entry below was captured from a real response, not
+  read from documentation; MailOptin documents no error catalog of its own.
+envelope:
+  content_type: application/json; charset=UTF-8
+  shape:
+    code: machine-readable string identifier
+    message: human-readable sentence
+    data.status: integer HTTP status, duplicated from the status line
+    data.params: object of field -> message, present on validation failures
+    data.details: object of field -> nested error object, present on validation failures
+problem_types:
+- code: rest_no_route
+  http_status: 404
+  title: No route was found matching the URL and request method.
+  observed_at: https://mailoptin.io/wp-json/nope/v1/nope
+  remediation: >-
+    Enumerate real routes from the public namespace index at https://mailoptin.io/wp-json/
+    (771 routes across 35 namespaces) rather than guessing paths.
+- code: rest_invalid_param
+  http_status: 400
+  title: 'Invalid parameter(s): <name>'
+  observed_at: https://mailoptin.io/wp-json/wp/v2/posts?per_page=200
+  detail_example: per_page must be between 1 (inclusive) and 100 (inclusive)
+  nested_code: rest_out_of_bounds
+  remediation: Read data.details.<param>.message for the concrete bound and retry within it.
+- code: rest_forbidden
+  http_status: 401
+  title: Sorry, you are not allowed to do that.
+  observed_at: https://mailoptin.io/wp-json/wp-abilities/v1/abilities
+  remediation: >-
+    Authenticate. The Abilities API is capability-gated; note the status is 401 even
+    though the code reads "forbidden".
+- code: mcp_unauthorized
+  http_status: 401
+  title: MCP authentication required.
+  observed_at: https://mailoptin.io/wp-json/mcp/mcp-oauth-server
+  www_authenticate: >-
+    Bearer realm="https://mailoptin.io",
+    resource_metadata="https://mailoptin.io/.well-known/oauth-protected-resource"
+  remediation: >-
+    Follow the resource_metadata link to the RFC 9728 document, then the RFC 8414
+    authorization-server document, and complete an authorization_code + PKCE S256 flow for
+    the `mcp` scope.
+edge_errors:
+- http_status: 403
+  source: Cloudflare bot management
+  content_type: text/html
+  observed_at:
+  - https://mailoptin.com/
+  - https://mailoptin.io/support/
+  - https://mailoptin.io/submit-ticket/
+  - https://my.mailoptin.io/login/
+  note: >-
+    HTML, not the JSON envelope — an automated client gets a challenge page with no
+    machine-readable error at all on these paths.

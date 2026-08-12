@@ -1,18 +1,63 @@
 aid: mailoptin
 name: MailOptin
-description: 'MailOptin is a company surfaced via the API Evangelist harvest backlog (source: marketing-integration-graph)
-  and added to the network as a stub for full-pipeline profiling.'
+description: 'MailOptin is a WordPress lead-generation and email-automation plugin that
+  converts website visitors into subscribers with popups, slide-ins, notification bars and
+  inline optin forms, then sends one-off newsletters and event-triggered automated emails.
+  It connects WordPress to more than sixty email marketing platforms, CRMs, form plugins,
+  e-commerce and membership systems — Mailchimp, ActiveCampaign, HubSpot, AWeber, Klaviyo,
+  Brevo, Salesforce, WooCommerce and others — and can post optin submissions to an
+  arbitrary endpoint through a generic webhook connection. MailOptin is self-hosted
+  software rather than a hosted service: it publishes no product API, no OpenAPI and no
+  client SDK, and all functionality runs inside the customer''s own WordPress
+  installation. Its own website, mailoptin.io, runs WordPress and does serve a public
+  self-describing REST API together with an OAuth-protected Model Context Protocol server.'
+image: https://mailoptin.io/wp-content/uploads/2014/05/mailoptin-plugin-banner.png
 url: https://raw.githubusercontent.com/api-evangelist/mailoptin/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:marketing-integration-graph
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-12'
 modified: '2026-08-12'
 tags:
 - Company
-apis: []
+- Email Marketing
+- Marketing Automation
+- Lead Generation
+- WordPress
+- Newsletters
+- Webhooks
+- Model Context Protocol
+- Plugins
+apis:
+- aid: mailoptin-site
+  name: MailOptin Site REST API and MCP Server
+  description: 'The WordPress REST API served by mailoptin.io, plus the Model Context
+    Protocol server exposed through the WordPress MCP Adapter at the mcp namespace. The
+    REST root is a public, self-describing route index — 35 namespaces and 771 routes,
+    each with its argument schema — and content routes under wp/v2 answer anonymously. The
+    MCP endpoint is live but auth-gated, returning 401 mcp_unauthorized with a
+    WWW-Authenticate Bearer challenge that links to RFC 9728 protected-resource metadata.
+    This is the company website''s own surface, not a product API for the MailOptin
+    lead-generation service, which ships as a self-hosted WordPress plugin.'
+  humanURL: https://mailoptin.io/
+  baseURL: https://mailoptin.io/wp-json
+  tags:
+  - WordPress
+  - Model Context Protocol
+  - OAuth
+  properties:
+  - type: MCPServer
+    url: mcp/mailoptin-mcp.yml
+  - type: Authentication
+    url: authentication/mailoptin-authentication.yml
+  - type: OAuthScopes
+    url: scopes/mailoptin-scopes.yml
+  - type: ErrorCatalog
+    url: errors/mailoptin-problem-types.yml
+  - type: Conventions
+    url: conventions/mailoptin-conventions.yml
+  - type: RateLimits
+    url: rate-limits/mailoptin-rate-limits.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -20,7 +65,76 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
-  url: https://mailoptin.com/
+  url: https://mailoptin.io/
+- type: Documentation
+  url: https://mailoptin.io/docs/
+- type: GettingStarted
+  url: https://mailoptin.io/section/getting-started/
+- type: Support
+  url: https://mailoptin.io/support/
+- type: Blog
+  url: https://mailoptin.io/blog/
+- type: BlogRSS
+  url: https://mailoptin.io/blog/feed/
+- type: GitHubOrganization
+  url: https://github.com/mailoptin
+- type: Pricing
+  url: https://mailoptin.io/pricing/
+- type: SignUp
+  url: https://my.mailoptin.io/login/
+- type: TermsOfService
+  url: https://mailoptin.io/terms-conditions/
+- type: PrivacyPolicy
+  url: https://mailoptin.io/privacy-policy/
+- type: ChangeLog
+  url: changelog/mailoptin-changelog.yml
+- type: Lifecycle
+  url: lifecycle/mailoptin-lifecycle.yml
+- type: Plans
+  url: plans/mailoptin-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/mailoptin-rate-limits.yml
+- type: Packages
+  url: packages/mailoptin-packages.yml
+- type: Webhooks
+  url: asyncapi/mailoptin-webhooks.yml
+- type: Conformance
+  url: conformance/mailoptin-conformance.yml
+- type: Conventions
+  url: conventions/mailoptin-conventions.yml
+- type: ErrorCatalog
+  url: errors/mailoptin-problem-types.yml
+- type: Authentication
+  url: authentication/mailoptin-authentication.yml
+- type: OAuthScopes
+  url: scopes/mailoptin-scopes.yml
+- type: MCPServer
+  url: mcp/mailoptin-mcp.yml
+- type: WellKnown
+  url: well-known/mailoptin-well-known.yml
+- type: LLMsTxt
+  url: llms/mailoptin-llms.txt
+- type: DomainSecurity
+  url: security/mailoptin-domain-security.yml
+x-enrichment:
+  date: '2026-08-12'
+  status: enriched
+  artifacts_added: 17
+  pass: local-v1
+x-coverage:
+  state: covered
+  reason: covered
+  detail: >-
+    MailOptin ships no product API, but mailoptin.io serves real machine-readable
+    documents — RFC 8414 authorization-server metadata, RFC 9728 protected-resource
+    metadata, a live OAuth-gated MCP server and a public 771-route WordPress REST index —
+    all of which were fetched and recorded.
+  evidence:
+  - url: https://mailoptin.io/.well-known/oauth-protected-resource
+    status: 200
+  - url: https://mailoptin.io/wp-json/mcp/mcp-oauth-server
+    status: 401
+  checked: '2026-08-12'
 x-vouched-by:
 - Drip
 - MailerLite

@@ -1,0 +1,32 @@
+generated: '2026-08-12'
+method: probed
+source: https://mailoptin.io/.well-known/oauth-authorization-server
+docs: null
+note: >-
+  Not derived from an OpenAPI — derive-oauth-scopes.py found no oauth2 securitySchemes
+  because MailOptin publishes no OpenAPI. The single scope below is read verbatim from
+  the RFC 8414 authorization-server metadata document mailoptin.io serves, and confirmed
+  against the RFC 9728 protected-resource document. MailOptin publishes no human-readable
+  scopes/permissions reference page, so there is no `docs:` URL to record.
+authorization_server: https://mailoptin.io
+scope_count: 1
+scopes:
+- name: mcp
+  description: >-
+    Access to the MailOptin site's Model Context Protocol server at
+    https://mailoptin.io/wp-json/mcp/mcp-oauth-server. This is the only scope the
+    authorization server advertises; it is coarse-grained — a single scope covering the
+    whole MCP surface, with no read/write split and no per-ability scoping.
+  source: scopes_supported
+  advertised_by:
+  - https://mailoptin.io/.well-known/oauth-authorization-server
+  - https://mailoptin.io/.well-known/oauth-protected-resource
+observations:
+- >-
+  Granularity is minimal. Consent to `mcp` is consent to every tool the WordPress
+  Abilities API registers, whatever that set turns out to be — the list is auth-gated and
+  could not be enumerated anonymously.
+- >-
+  Public clients only (token_endpoint_auth_methods_supported is ["none"]) with PKCE S256
+  required, and client identity established by client_id metadata document rather than
+  dynamic client registration.

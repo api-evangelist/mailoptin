@@ -1,0 +1,75 @@
+generated: '2026-08-12'
+method: searched
+source: https://mailoptin.io/article/trigger-webhooks-wordpress-form-submissions/
+secondary_source: >-
+  mailoptin/src/connections/WebHookConnect/SendWebhookRequest.php and
+  mailoptin/src/connections/WebHookConnect/Connect.php in
+  https://downloads.wordpress.org/plugin/mailoptin.1.2.78.1.zip
+asyncapi_spec: null
+note: >-
+  MailOptin publishes no AsyncAPI and no event catalog, and there is nothing to fabricate
+  one from: the webhook surface is OUTBOUND FROM THE CUSTOMER'S OWN WordPress site, not
+  from a MailOptin-hosted platform. The plugin's "Webhook" connection fires an HTTP request
+  the site owner composes, to a URL the site owner supplies, when an optin form is
+  submitted. There is exactly one trigger and no subscription API, so this is recorded as a
+  webhook catalog (type Webhooks) rather than as an event specification.
+direction: outbound-from-customer-site
+delivery: at-most-once
+event_count: 1
+events:
+- name: optin.submitted
+  documented_as: optin form submission
+  trigger: A visitor submits any MailOptin optin form on the customer's WordPress site.
+  transport: HTTP request from the customer's WordPress site to a user-supplied URL
+  methods: [GET, POST, PUT, PATCH, DELETE]
+  default_method: GET
+  content_types:
+  - application/json
+  - application/x-www-form-urlencoded
+  payload:
+    composition: user-defined key/value pairs
+    merge_tags:
+    - tag: mo_email
+      resolves_to: subscriber email address
+    - tag: mo_name
+      resolves_to: full name as submitted
+    - tag: mo_fname
+      resolves_to: first name, split from the submitted name
+    - tag: mo_lname
+      resolves_to: last name, split from the submitted name
+    - tag: <custom field>
+      resolves_to: the matching extra field captured by the optin
+    note: >-
+      There is no fixed schema. Empty values are filtered out before send, so a receiver
+      cannot rely on any key being present.
+  headers:
+    user_defined: true
+    automatic:
+    - Content-Type: application/json (set only for JSON-format POST/PUT/PATCH)
+  query_string: >-
+    For GET and DELETE the composed pairs are urlencoded onto the request URL instead of
+    sent as a body.
+security:
+  signing: none
+  shared_secret: none
+  timestamp: none
+  replay_protection: none
+  tls_verification: enabled by default; overridable via the https_local_ssl_verify filter
+  note: >-
+    A receiver has no cryptographic way to verify that a request came from a MailOptin
+    site. Authentication must be improvised by the site owner as a static header or a
+    secret in the URL.
+reliability:
+  retries: none
+  backoff: none
+  dead_letter: none
+  ordering: none
+  note: One wp_remote_request per submission; a non-2xx response is logged, not retried.
+testing:
+  documented_tools:
+  - https://webhook.site
+  - https://beeceptor.com
+  note: The documentation suggests third-party request bins; MailOptin ships no test event sender.
+inbound_events:
+  supported: false
+  note: MailOptin accepts no inbound webhooks and offers no event subscription API.
