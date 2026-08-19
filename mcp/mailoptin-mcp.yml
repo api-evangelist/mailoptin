@@ -3,19 +3,20 @@ method: probed
 source: https://mailoptin.io/.well-known/oauth-protected-resource
 status: live
 name: MailOptin Site MCP Server
-description: >-
-  mailoptin.io runs a live Model Context Protocol server, exposed through the WordPress
-  MCP Adapter as the `mcp` namespace of the site's REST API. It was discovered from the
-  RFC 9728 protected-resource metadata document, which names
-  https://mailoptin.io/wp-json/mcp/mcp-oauth-server as the protected resource. This is a
-  surface over the MailOptin WORDPRESS SITE (content, site abilities), not a product API
-  for the MailOptin lead-generation service — MailOptin ships as a self-hosted WordPress
-  plugin and publishes no hosted product API.
+description: mailoptin.io runs a live Model Context Protocol server, exposed through the WordPress MCP
+  Adapter as the `mcp` namespace of the site's REST API. It was discovered from the RFC 9728 protected-resource
+  metadata document, which names https://mailoptin.io/wp-json/mcp/mcp-oauth-server as the protected resource.
+  This is a surface over the MailOptin WORDPRESS SITE (content, site abilities), not a product API for
+  the MailOptin lead-generation service — MailOptin ships as a self-hosted WordPress plugin and publishes
+  no hosted product API.
 servers:
 - name: mcp-oauth-server
   url: https://mailoptin.io/wp-json/mcp/mcp-oauth-server
   transport: streamable-http
-  methods_allowed: [POST, GET, DELETE]
+  methods_allowed:
+  - POST
+  - GET
+  - DELETE
   auth: oauth2
   auth_required: true
   probe:
@@ -24,18 +25,17 @@ servers:
     body: '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
     http_status: 401
     response: '{"code":"mcp_unauthorized","message":"MCP authentication required.","data":{"status":401}}'
-    www_authenticate: >-
-      Bearer realm="https://mailoptin.io",
-      resource_metadata="https://mailoptin.io/.well-known/oauth-protected-resource"
+    www_authenticate: Bearer realm="https://mailoptin.io", resource_metadata="https://mailoptin.io/.well-known/oauth-protected-resource"
 - name: mcp-adapter-default-server
   url: https://mailoptin.io/wp-json/mcp/mcp-adapter-default-server
   transport: streamable-http
-  methods_allowed: [POST, GET, DELETE]
+  methods_allowed:
+  - POST
+  - GET
+  - DELETE
   auth: unknown
-  note: >-
-    Declared in the public route index at https://mailoptin.io/wp-json/mcp but not probed
-    for tools; the default adapter server is normally cookie/nonce authenticated for
-    logged-in WordPress users.
+  note: Declared in the public route index at https://mailoptin.io/wp-json/mcp but not probed for tools;
+    the default adapter server is normally cookie/nonce authenticated for logged-in WordPress users.
 discovery:
 - url: https://mailoptin.io/.well-known/oauth-protected-resource
   status: 200
@@ -51,21 +51,29 @@ authorization:
   authorization_endpoint: https://mailoptin.io/oauth/authorize
   token_endpoint: https://mailoptin.io/oauth/token
   revocation_endpoint: https://mailoptin.io/oauth/revoke
-  grant_types: [authorization_code, refresh_token]
+  grant_types:
+  - authorization_code
+  - refresh_token
   pkce: S256
-  scopes: [mcp]
+  scopes:
+  - mcp
   client_registration: client_id_metadata_document
   public_clients: true
 tools:
   status: gated
   count: null
-  note: >-
-    NOT RECORDED. tools/list returns 401 anonymously and the backing WordPress Abilities
-    API (/wp-json/wp-abilities/v1/abilities) also returns 401 rest_forbidden. The real
-    tool list and its inputSchemas require an authenticated OAuth token; nothing is
-    listed here rather than guessing at WordPress-adapter defaults.
+  note: NOT RECORDED. tools/list returns 401 anonymously and the backing WordPress Abilities API (/wp-json/wp-abilities/v1/abilities)
+    also returns 401 rest_forbidden. The real tool list and its inputSchemas require an authenticated
+    OAuth token; nothing is listed here rather than guessing at WordPress-adapter defaults.
 related:
   abilities_api:
     url: https://mailoptin.io/wp-json/wp-abilities/v1/abilities
     status: 401
     note: WordPress Abilities API — the tool registry the MCP adapter exposes. Gated.
+deployment:
+  mode: remote
+  endpoint: https://mailoptin.io/wp-json/mcp/mcp-oauth-server
+  verified: probed
+  probe: gated
+  checked: '2026-08-12'
+  source: catalog MCP census
