@@ -15,7 +15,7 @@ image: https://mailoptin.io/wp-content/uploads/2014/05/mailoptin-plugin-banner.p
 url: https://raw.githubusercontent.com/api-evangelist/mailoptin/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:marketing-integration-graph
-specificationVersion: '0.20'
+specificationVersion: '0.23'
 created: '2026-08-12'
 modified: '2026-08-12'
 tags:
