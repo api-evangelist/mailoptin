@@ -25,6 +25,16 @@ tags:
 - Lead Generation
 - WordPress
 - Newsletters
+- Webhook
+- MCP
+- Plugins
+tags_raw:
+- Company
+- Email Marketing
+- Marketing Automation
+- Lead Generation
+- WordPress
+- Newsletters
 - Webhooks
 - Model Context Protocol
 - Plugins
@@ -42,6 +52,10 @@ apis:
   humanURL: https://mailoptin.io/
   baseURL: https://mailoptin.io/wp-json
   tags:
+  - WordPress
+  - MCP
+  - Authentication
+  tags_raw:
   - WordPress
   - Model Context Protocol
   - OAuth
