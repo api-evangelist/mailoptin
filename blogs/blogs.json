@@ -1,0 +1,18 @@
+{
+  "repo": "mailoptin",
+  "feeds": [
+    {
+      "source": "https://mailoptin.io/support/",
+      "error": "HTTPError"
+    },
+    {
+      "source": "https://mailoptin.io/blog/",
+      "feed_url": "https://mailoptin.io/blog/feed/",
+      "title": "",
+      "saved": 1,
+      "method": "discovered"
+    }
+  ],
+  "post_count": 1,
+  "fetched": "2026-08-22T20:20:02Z"
+}
