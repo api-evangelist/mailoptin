@@ -11,6 +11,17 @@ description: 'MailOptin is a WordPress lead-generation and email-automation plug
   client SDK, and all functionality runs inside the customer''s own WordPress
   installation. Its own website, mailoptin.io, runs WordPress and does serve a public
   self-describing REST API together with an OAuth-protected Model Context Protocol server.'
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://mailoptin.io/wp-content/uploads/2014/05/mailoptin-plugin-banner.png
 url: https://raw.githubusercontent.com/api-evangelist/mailoptin/refs/heads/main/apis.yml
 x-type: company
