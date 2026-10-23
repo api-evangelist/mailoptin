@@ -2,6 +2,9 @@ generated: '2026-10-21'
 method: searched
 checked:
 - hubspot/integrations/hubspot-integration-edges.yml
+- https://hex.pm/api
+- https://packagist.org/packages
+- https://pub.dev/api
 source:
 - hubspot/integrations/hubspot-integration-edges.yml
 edges:
@@ -22,3 +25,43 @@ edges:
   detected: '2026-10-21'
   detected_by: mirror-platform-listings.py
   category: CONTENT_MANAGEMENT_SYSTEM
+- partner_name: Packagist
+  partner: packagist
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (PHP)
+  evidence: https://packagist.org/packages/mailoptin/authifly
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: Packagist (public registry JSON)
+    spec_file: null
+    language: PHP
+    packages:
+    - name: mailoptin/authifly
+      version: 0.1.0-alpha.1587979879
+      released: '2020-04-24'
+      released_field: time
+      lapsed: true
+      page: https://packagist.org/packages/mailoptin/authifly
+      repo_leg: github-org:mailoptin
+      publisher_leg: org:mailoptin
+      matched_by: github-org
+      abandoned: true
+    - name: mailoptin/mailchimp-api-php
+      version: 2.1.8
+      released: '2026-09-10'
+      released_field: time
+      lapsed: false
+      page: https://packagist.org/packages/mailoptin/mailchimp-api-php
+      repo_leg: github-org:mailoptin
+      publisher_leg: org:mailoptin
+      matched_by: github-org
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-php-dart-elixir-package-registries.py
+    detected: '2026-10-22'
+  detected_by: sweep-php-dart-elixir-package-registries.py
+  first_seen: '2026-10-22'
