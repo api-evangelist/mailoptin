@@ -64,5 +64,125 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-MailOptin is a company surfaced via the API Evangelist harvest backlog (source: marketing-integration-graph) and added to the network as a stub for full-pipeline profiling.
-- https://mailoptin.com/
+MailOptin is a WordPress lead-generation and email-automation plugin that converts website visitors into subscribers with popups, slide-ins, notification bars and inline optin forms, then sends one-off newsletters and event-triggered automated emails. It connects WordPress to more than sixty email marketing platforms, CRMs, form plugins, e-commerce and membership systems — Mailchimp, ActiveCampaign, HubSpot, AWeber, Klaviyo, Brevo, Salesforce, WooCommerce and others — and can post optin submissions to an arbitrary endpoint through a generic webhook connection. MailOptin is self-hosted software rather than a hosted service: it publishes no product API, no OpenAPI and no client SDK, and all functionality runs inside the customer's own WordPress installation. Its own website, mailoptin.io, runs WordPress and does serve a public self-describing REST API together with an OAuth-protected Model Context Protocol server.
+
+**Areas:** Company · Email Marketing · Marketing Automation · Lead Generation · WordPress · Newsletters · Webhook · MCP · Plugins
+
+## MailOptin on APIs.io
+
+Everything profiled for MailOptin is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/mailoptin/](https://apis.io/providers/mailoptin/)** — or go straight to one of the APIs or properties below.
+
+### APIs (1)
+
+- [MailOptin Site REST API and MCP Server](https://apis.io/apis/mailoptin/mailoptin-site/) — The WordPress REST API served by mailoptin.io, plus the Model Context Protocol server exposed through the WordPress MCP Adapter at the mcp namespace. The…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Mailoptin Webhooks](https://apis.io/asyncapis/mailoptin/mailoptin-webhooks/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [MailOptin Site MCP Server](https://apis.io/servers/mailoptin/mailoptin-site-mcp-server/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Mailoptin Authentication](https://apis.io/security/mailoptin/mailoptin-authentication/)
+- [Mailoptin Domain Security](https://apis.io/security/mailoptin/mailoptin-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Mailoptin Scopes](https://apis.io/scopes/mailoptin/mailoptin-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Mailoptin Plans Pricing](https://apis.io/plans/mailoptin/mailoptin-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Mailoptin Rate Limits](https://apis.io/rate-limits/mailoptin/mailoptin-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://mailoptin.io/)
+- [Documentation](https://mailoptin.io/docs/)
+- [Getting started](https://mailoptin.io/section/getting-started/)
+- [Pricing](https://mailoptin.io/pricing/)
+- [Sign up](https://my.mailoptin.io/login/)
+- [Support](https://mailoptin.io/support/)
+- [Blog](https://mailoptin.io/blog/)
+- [Terms of service](https://mailoptin.io/terms-conditions/)
+- [Privacy policy](https://mailoptin.io/privacy-policy/)
+- [GitHub](https://github.com/mailoptin)
+
+## API Evangelist rating
+
+**Kin Score 49.1** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 75.0 |
+| Contract quality | 39.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 26.3 |
+| Developer ergonomics | 40.5 |
+| Access clarity | 76.3 |
+
+**Agent readiness 39.2** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | platform (partial credit) |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | yes |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 34.3** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/mailoptin/](https://apis.io/providers/mailoptin/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for MailOptin: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/mailoptin/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
